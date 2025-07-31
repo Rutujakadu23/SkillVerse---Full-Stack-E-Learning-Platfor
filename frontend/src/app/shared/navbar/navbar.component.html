@@ -1,0 +1,6 @@
+<nav>
+  <a routerLink="/admin-dashboard" *ngIf="role === 'Admin'">Admin</a>
+  <a routerLink="/instructor-dashboard" *ngIf="role === 'Instructor'">Instructor</a>
+  <a routerLink="/learner-dashboard" *ngIf="role === 'Learner'">Learner</a>
+  <button (click)="logout()">Logout</button>
+</nav>

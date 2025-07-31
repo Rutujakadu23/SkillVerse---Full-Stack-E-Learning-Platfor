@@ -1,0 +1,9 @@
+com\skillverse\controller\UserController.class
+com\skillverse\dto\UserDTO.class
+com\skillverse\service\UserService.class
+com\skillverse\repository\UserRepository.class
+com\skillverse\security\SecurityConfig.class
+com\skillverse\SkillverseApplication.class
+com\skillverse\entity\User.class
+com\skillverse\service\impl\UserServiceImpl.class
+com\skillverse\entity\Role.class

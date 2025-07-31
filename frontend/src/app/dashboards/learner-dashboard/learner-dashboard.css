@@ -1,0 +1,16 @@
+.dashboard {
+  padding: 20px;
+  background-color: #e8f5e9;
+  border-left: 6px solid #4caf50;
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  color: #4caf50;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 15px;
+  color: #333;
+}
