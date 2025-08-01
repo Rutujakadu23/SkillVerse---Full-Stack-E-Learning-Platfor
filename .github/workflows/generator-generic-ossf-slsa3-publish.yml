@@ -1,0 +1,49 @@
+# ✅ SLSA Level 3 Provenance Generator for SkillVerse
+# Documentation: https://slsa.dev
+# Generator Repo: https://github.com/slsa-framework/slsa-github-generator
+
+name: SLSA Provenance Generator - SkillVerse
+
+on:
+  workflow_dispatch:
+  release:
+    types: [created]
+
+permissions:
+  contents: write
+  actions: read
+  id-token: write
+
+jobs:
+  build-artifacts:
+    name: Build and Hash Artifacts
+    runs-on: ubuntu-latest
+    outputs:
+      digests: ${{ steps.hash.outputs.digests }}
+
+    steps:
+      - name: 📦 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🛠️ Build Artifacts
+        run: |
+          mkdir -p dist
+          echo "SkillVerse - Artifact 1" > dist/artifact1.txt
+          echo "SkillVerse - Artifact 2" > dist/artifact2.txt
+
+      - name: 🔐 Generate Provenance Subject Hashes
+        id: hash
+        run: |
+          set -euo pipefail
+          files=$(ls dist/*)
+          echo "Computing SHA256 hashes for the following files:"
+          echo "$files"
+          echo "digests=$(sha256sum $files | base64 -w0)" >> "${GITHUB_OUTPUT}"
+
+  generate-provenance:
+    name: 🔒 Generate SLSA Provenance
+    needs: [build-artifacts]
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.4.0
+    with:
+      base64-subjects: "${{ needs.build-artifacts.outputs.digests }}"
+      upload-assets: true
